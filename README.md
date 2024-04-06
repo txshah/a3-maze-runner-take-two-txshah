@@ -1,6 +1,6 @@
-# Assignment A1 - Maze Runner
+# Assignment A3 - Maze Runner Take Two 
 
-* **Student**: [FIRSTNAME LASTNAME](MACID@mcmaster.ca)
+* **Student**: [TVESHA SHAH](shaht28@mcmaster.ca)
 * **Program**: B. Eng. In Software Engineering
 * **Course code**: SFWRENG 2AA4
 * **Course Title**: Software Design I - Introduction to Software Development
