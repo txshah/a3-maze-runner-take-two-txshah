@@ -12,6 +12,7 @@ public class RightHandSolver implements MazeSolver {
 
         Position currentPos = maze.getStart();
         Direction dir = Direction.RIGHT;
+        
         while (!currentPos.equals(maze.getEnd())) {
             if (!maze.isWall(currentPos.move(dir.turnRight()))) {
                 // Turn right and move forward if not a wall
