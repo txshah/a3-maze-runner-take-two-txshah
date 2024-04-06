@@ -6,6 +6,15 @@
 * **Course Title**: Software Design I - Introduction to Software Development
 * Term: *Level II - Winter 2024*
 
+CREDITS TO ALEXANDRE LACHANCE FOR THE STARTER CODE 
+ALL WORK BY STUDENT TO IMPLEMENT A GRAPH ALGORITHM EXPANDED ON INITIAL MAZE SOLVER 
+
+Additional resources for graph implementation: used for understanding and implementation
+- 2C03 Course slides - information on BFS (Professor Jelle Hellings)
+- General Understanding of BFS and it's practical implementation 
+    - TheHappieCat (https://www.youtube.com/watch?v=WvR9voi0y2I&t=339s&ab_channel=TheHappieCat)
+    - GeeksForGeeks (https://www.geeksforgeeks.org/breadth-first-search-or-bfs-for-a-graph/)
+
 ## Business Logic Specification
 
 This program explores a maze, finding a path from an entry point to an exit one.
