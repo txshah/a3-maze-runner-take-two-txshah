@@ -59,7 +59,7 @@ public class Main {
             case "tremaux" -> {
                 logger.debug("Tremaux algorithm chosen.");
                 solver = new TremauxSolver();
-            }
+            }//added BFS implementation 
             case "bfs" -> {
                 logger.debug("BFS algorithm chosen.");
                 solver = new BFS();

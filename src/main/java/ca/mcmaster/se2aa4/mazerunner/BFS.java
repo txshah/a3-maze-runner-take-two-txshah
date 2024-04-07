@@ -18,16 +18,16 @@ public class BFS implements MazeSolver {
     public static Position startPos; 
     public static Direction dir = Direction.RIGHT; //starting direction, always right 
 
-    public static Queue<Node> queue = new LinkedList<Node>();
-    public static ArrayList<Node> explored = new ArrayList<Node>(); 
-   //public static Queue<Direction> direction = new LinkedList<Direction>();
+    public static Queue<Node> queue = new LinkedList<Node>(); //maintains queue of nodes to check until goal node is found 
+    public static ArrayList<Node> explored = new ArrayList<Node>();  //holds all explored nodes to prevent repeats 
 
     public static Map<Position, Position> parentTracker = new HashMap<>(); //dictionary tracking new nodes and the parent
 
     @Override
     public Path solve(Maze maze) {
-        search(maze);
-        return path(maze);
+        //path method - as required by interface 
+        search(maze);//search to get to goal node 
+        return path(maze);//path to return output 
     }
 
     public static boolean search(Maze maze) {
@@ -36,14 +36,14 @@ public class BFS implements MazeSolver {
         goalPos = maze.getEnd();
         
         //start point storage 
-        explored.add(new Node(currentPos, dir));
-        queue.offer(new Node(currentPos, dir)); 
-        parentTracker.put(currentPos, null);
+        explored.add(new Node(currentPos, dir));//store start node as explored 
+        queue.offer(new Node(currentPos, dir)); //store start node in queue 
+        parentTracker.put(currentPos, null); //add start node with no parent 
         
-        while (!(queue.isEmpty())) {
-            Node currentNode = queue.poll();
-            dir = currentNode.getDirection();
-            currentPos = currentNode.getPosition();
+        while (!(queue.isEmpty())) { //start BFS implementation, run loop as long a queue is not empty 
+            Node currentNode = queue.poll();//remove first item from queue 
+            dir = currentNode.getDirection(); //get direction from node 
+            currentPos = currentNode.getPosition(); //get position from node 
 
             ArrayList<Node> nodes = around(maze); //list of nodes around current 
 
@@ -67,16 +67,15 @@ public class BFS implements MazeSolver {
         //check nodes front left and right and if they are not walls, add to list 
         ArrayList<Node> nodes = new ArrayList<>();
 
-        if(!maze.isWall(currentPos.move(dir))){
+        if(!maze.isWall(currentPos.move(dir))){//check forward 
             nodes.add(new Node(currentPos.move(dir), dir)); 
         }
-        if (!maze.isWall(currentPos.move(dir.turnLeft()))){
+        if (!maze.isWall(currentPos.move(dir.turnLeft()))){ //check left 
             nodes.add(new Node(currentPos.move(dir.turnLeft()), dir.turnLeft()));      
         }
-        if (!maze.isWall(currentPos.move(dir.turnRight()))){
+        if (!maze.isWall(currentPos.move(dir.turnRight()))){ //check right 
             nodes.add(new Node(currentPos.move(dir.turnRight()), dir.turnRight())); 
         }
-
         return nodes; 
     }
 
@@ -84,55 +83,54 @@ public class BFS implements MazeSolver {
         //set up path and other variables 
         Path path = new Path();
         startPos = maze.getStart();   
-        Direction currentDir = Direction.RIGHT; 
+        Direction currentDir = Direction.RIGHT; //set start direction 
 
-        Stack<Position> stack= new Stack<>();  
+        //stack ensures that even though we are backtracking from goalpoint we still read the values from the start
+        Stack<Position> stack= new Stack<>(); //set up stack to hold nodes to traverse (start from end and go to start)
         Position current = goalPos; 
 
-        while (current != startPos){//or until null? 
-            stack.push(current); //push goal node, or any current node into stack 
-            current = parentTracker.get(current); //update current to be parent of current node, so at start, parent of goal node
-            
-            if(current == startPos){//break to make sure loop does not run forever 
-                break;
-            }
+        while (!(current.equals(startPos))){//make sure current node is not start (since working backwards)
+            stack.push(current); //push current node into stack (starts with goal/final node)
+            current = parentTracker.get(current); //update current to be parent of current node (at start, parent of goal node)
         }
 
-        //loop through explored and check stack items with explored nodes 
-        while (!(stack.isEmpty())){
-            for (Node node:explored){
-                Position bestPath = stack.peek();
-                Position exploredNodes = node.getPosition(); 
+        while (!(stack.isEmpty())){//run until entire stack empty 
+            for (Node node:explored){ //loop through explored and check stack items with explored nodes 
+                Position bestPath = stack.peek();//store first item in stack (after start node - since already there don't need to travel there)
+                Position exploredNodes = node.getPosition(); //store position of node
 
-                if(bestPath.equals(exploredNodes)){
-                    Direction next = node.getDirection(); 
+                if(bestPath.equals(exploredNodes)){//check if node and stack value match 
+                    Direction next = node.getDirection(); //get direction and based on direction add to path 
 
-                    if(next.equals(currentDir)){
+                    if(next.equals(currentDir)){//if same as current direction go forward 
                         path.addStep('F');
 
                     }else if (next.equals(currentDir.turnRight())){
+                        //if same as current's right go right and forward 
                         path.addStep('R');
                         path.addStep('F');
-                        currentDir = next;
+                        currentDir = next;//update current 
 
                     }else if (next.equals(currentDir.turnLeft())){
+                        //if same as current's left, go left and forward 
                         path.addStep('L');
                         path.addStep('F');
-                        currentDir = next; 
+                        currentDir = next; //update current 
 
                     }else if (next.equals(currentDir.turnRight().turnRight())){
+                        //uturn case 
                         //technically should never happen since the BFS will not lead us to a dead end 
                         path.addStep('R');
                         path.addStep('R');
                         currentDir = next; 
                     }
 
-                    stack.pop();
-                    break;
+                    stack.pop();//since node and stack value match, pop the value out 
+                    break;//break loop 
                 }
             }
         }
-        return path; 
+        return path; //return final output 
     }
 }
 
