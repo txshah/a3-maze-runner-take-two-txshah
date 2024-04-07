@@ -91,5 +91,9 @@ public class BFS implements MazeSolver {
         return path; 
     }
 
+    //create a state class to store direction, position and output
+    //OUTPUT: (maybe - like F, L R --> Like to reach from current not to this node do FFR)
+    //so all the nodes will states be updated like that in the queues
+    //for the final path go through the tree and collect all the paths, then flip the string to get the right order 
 
 }
