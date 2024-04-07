@@ -10,7 +10,7 @@ CREDITS TO ALEXANDRE LACHANCE FOR THE STARTER CODE<br />
 ALL WORK BY STUDENT TO IMPLEMENT A GRAPH ALGORITHM EXPANDED ON INITIAL MAZE SOLVER<br />
 
 Additional resources for graph implementation: 
-- 2C03 Course slides - information on BFS (Professor Jelle Hellings)
+- 2C03 Course slides - information on graph algos (Professor Jelle Hellings)
 - General Understanding of BFS and it's practical implementation 
     - TheHappieCat (https://www.youtube.com/watch?v=WvR9voi0y2I&t=339s&ab_channel=TheHappieCat)
     - GeeksForGeeks (https://www.geeksforgeeks.org/breadth-first-search-or-bfs-for-a-graph/)
