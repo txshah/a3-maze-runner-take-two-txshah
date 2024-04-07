@@ -27,7 +27,7 @@ public class Main {
                     System.out.println("incorrect path");
                 }
             } else {
-                String method = cmd.getOptionValue("method", "righthand");
+                String method = cmd.getOptionValue("method", "bfs");
                 Path path = solveMaze(method, maze);
                 System.out.println(path.getFactorizedForm());
             }
@@ -58,6 +58,10 @@ public class Main {
             case "tremaux" -> {
                 logger.debug("Tremaux algorithm chosen.");
                 solver = new TremauxSolver();
+            }
+            case "bfs" -> {
+                logger.debug("BFS algorithm chosen.");
+                solver = new BFS();
             }
             default -> {
                 throw new Exception("Maze solving method '" + method + "' not supported.");
