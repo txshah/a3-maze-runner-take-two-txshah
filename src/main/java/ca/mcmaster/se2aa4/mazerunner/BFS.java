@@ -30,7 +30,7 @@ public class BFS implements MazeSolver {
         return path(maze);//path to return output 
     }
 
-    public static boolean search(Maze maze) {
+    private static boolean search(Maze maze) {
         //current positions and goal position 
         currentPos = maze.getStart();      
         goalPos = maze.getEnd();
@@ -63,7 +63,7 @@ public class BFS implements MazeSolver {
         return true; 
     }
 
-    public static ArrayList<Node> around(Maze maze){
+    private static ArrayList<Node> around(Maze maze){
         //check nodes front left and right and if they are not walls, add to list 
         ArrayList<Node> nodes = new ArrayList<>();
 
@@ -79,7 +79,7 @@ public class BFS implements MazeSolver {
         return nodes; 
     }
 
-    public Path path(Maze maze) {
+    private Path path(Maze maze) {
         //set up path and other variables 
         Path path = new Path();
         startPos = maze.getStart();   
