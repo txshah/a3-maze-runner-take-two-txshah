@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Stack;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,6 +15,7 @@ public class BFS implements MazeSolver {
 
     public static Position currentPos;
     public static Position goalPos; 
+    public static Position startPos; 
     public static Direction dir;
 
     public static Queue<Node> queue = new LinkedList<Node>();
@@ -28,7 +30,7 @@ public class BFS implements MazeSolver {
         //anytime iswall is false we can add to graph 
 
         search(maze);
-        return path();
+        return path(maze);
     }
 
     public static boolean search(Maze maze) {
@@ -87,11 +89,55 @@ public class BFS implements MazeSolver {
         return nodes; 
     }
 
-    public Path path() {
+    public Path path(Maze maze) {
         Path path = new Path();
+        startPos = maze.getStart();   
+        Direction currentDir = Direction.RIGHT; 
+
+        Stack<Position> stack= new Stack<>();  
+        
+        Position current = goalPos; 
+
+        while (current != startPos){//or until null? 
+            stack.push(current); //push goal node, or any current node into stack 
+            current = parentTracker.get(current); //update current to be parent of current node, so at start, parent of goal node
+            //eventually will get to start node
+        }
+        //stack.push(current);//current should be startPos right now 
+
+        //loop through explored and check stack items with explored nodes 
+        while (!stack.isEmpty()){
+            for (Node node:explored){
+                if(stack.pop().equals(node.getPosition())){
+                    if(node.getDirection(). equals(currentDir)){
+                        path.addStep('F');
+                    }else if (node.getDirection.equals(currentDir.turnRight())){
+                        path.addStep('R');
+                        path.addStep('F');
+                        currentDir = node.getDirection(); 
+                    }else if (node.getDirection.equals(currentDir.turnLeft())){
+                        path.addStep('L');
+                        path.addStep('F');
+                        currentDir = node.getDirection(); 
+                    }else if (node.getDirection.equals(currentDir.turnRight().turnRight())){
+                        //technically should never happen since the BFS will not lead us to a dead end 
+                        path.addStep('R');
+                        path.addStep('R');
+                        currentDir = node.getDirection(); 
+                    }
+                    break;
+                }
+            }
+        }
         return path; 
     }
 }
+
+            //loop through explored nodes
+            //direction and direction old 
+            //add to direction
+            //check if old directiom matches new 
+            //if not check turn 
 
         //go through parent tracker tree from goalnode position to start node and get order of nodes (from start to end)
         //from this list loop through the explored nodes from the beggining, set a local direction variable 
@@ -99,7 +145,7 @@ public class BFS implements MazeSolver {
         //if the direction is same as previous/local direction variable add F to the string
         //if different add LF or RF (based on the direction change - if it's going right and then it goes up that means LF)
         //return path 
-        
+
  //create a state class to store direction, position and output
     //so explored and queue will be position, direction
     //parentTracker would be position new, position parent, output/path (to get from parent to new) 

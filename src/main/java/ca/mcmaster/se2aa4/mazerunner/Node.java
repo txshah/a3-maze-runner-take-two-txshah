@@ -5,6 +5,7 @@ public class Node {
     private Position position;
     private Direction direction;
     //private Path path; 
+    public Object getDirection;
 
     public Node(Position position, Direction direction) {
         this.position = position;
