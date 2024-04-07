@@ -28,6 +28,7 @@ public class BFS implements MazeSolver {
     public Path solve(Maze maze) {
         //Path path = new Path();
         //anytime iswall is false we can add to graph 
+        logger.info("in BFS"); 
 
         search(maze);
         return path(maze);
@@ -35,10 +36,14 @@ public class BFS implements MazeSolver {
 
     public static boolean search(Maze maze) {
         //current positions and goal position 
+        logger.info("in search"); 
         currentPos = maze.getStart();      
         goalPos = maze.getEnd();
         Direction dir = Direction.RIGHT; //starting direction, always right 
-        
+        logger.info(currentPos); 
+        logger.info(goalPos); 
+        logger.info(dir); 
+
         //start point storage 
         explored.add(new Node(currentPos, dir));
         queue.offer(new Node(currentPos, dir)); 
@@ -73,23 +78,37 @@ public class BFS implements MazeSolver {
 
     public static ArrayList<Node> around(Maze maze){
         //check nodes left and right and if they are not walls, add to queue 
+        logger.info("checking surrondings"); 
         ArrayList<Node> nodes = new ArrayList<>();
 
         if(!maze.isWall(currentPos.move(dir))){
             nodes.add(new Node(currentPos.move(dir), dir)); 
+            
+            logger.info("node check 1");
+            logger.info(currentPos.move(dir)); 
+            logger.info(dir); 
         }
         if (!maze.isWall(currentPos.move(dir.turnLeft()))){
-            nodes.add(new Node(currentPos.move(dir), dir.turnLeft())); 
+            nodes.add(new Node(currentPos.move(dir.turnLeft()), dir.turnLeft())); 
+
+            logger.info("node check 2");
+            logger.info(currentPos.move(dir.turnLeft())); 
+            logger.info(dir.turnLeft()); 
         }
 
         if (!maze.isWall(currentPos.move(dir.turnRight()))){
-            nodes.add(new Node(currentPos.move(dir), dir.turnRight())); 
+            nodes.add(new Node(currentPos.move(dir.turnRight()), dir.turnRight())); 
+
+            logger.info("node check 3");
+            logger.info(currentPos.move(dir.turnRight())); 
+            logger.info(dir.turnRight()); 
         }
 
         return nodes; 
     }
 
     public Path path(Maze maze) {
+        logger.info("getting path");
         Path path = new Path();
         startPos = maze.getStart();   
         Direction currentDir = Direction.RIGHT; 
@@ -99,16 +118,18 @@ public class BFS implements MazeSolver {
         Position current = goalPos; 
 
         while (current != startPos){//or until null? 
+            logger.info("creating stack");
             stack.push(current); //push goal node, or any current node into stack 
             current = parentTracker.get(current); //update current to be parent of current node, so at start, parent of goal node
             //eventually will get to start node
         }
         //stack.push(current);//current should be startPos right now 
-
+        logger.info("stack made");
         //loop through explored and check stack items with explored nodes 
         while (!stack.isEmpty()){
             for (Node node:explored){
                 if(stack.pop().equals(node.getPosition())){
+                    logger.info("match");
                     if(node.getDirection(). equals(currentDir)){
                         path.addStep('F');
                     }else if (node.getDirection.equals(currentDir.turnRight())){
@@ -129,6 +150,7 @@ public class BFS implements MazeSolver {
                 }
             }
         }
+        logger.info("path finished");
         return path; 
     }
 }
