@@ -68,8 +68,10 @@ public class BFS implements MazeSolver {
                     queue.offer(node);//add to queue 
                     explored.add(node);//tracks in explored 
                     parentTracker.put(node.getPosition(),currentPos); //tracks new node and parent
+                    
                     logger.info(node.getPosition());
                     logger.info(currentPos);
+                    
                     if (node.getPosition().equals(goalPos)){//checks if goal position reached with new addition 
                         logger.info("found goal");
                         return true;
@@ -97,6 +99,7 @@ public class BFS implements MazeSolver {
         if (!maze.isWall(currentPos.move(dir.turnLeft()))){
             logger.info("left"); 
             nodes.add(new Node(currentPos.move(dir.turnLeft()), dir.turnLeft())); 
+            
             logger.info("node check 2");
             logger.info(currentPos.move(dir.turnLeft())); 
             logger.info(dir.turnLeft()); 
@@ -121,7 +124,6 @@ public class BFS implements MazeSolver {
         Direction currentDir = Direction.RIGHT; 
 
         Stack<Position> stack= new Stack<>();  
-        
         Position current = goalPos; 
 
         while (current != startPos){//or until null? 
@@ -143,30 +145,37 @@ public class BFS implements MazeSolver {
             logger.info("in while");
             for (Node node:explored){
                 logger.info("checking nodes LOLZ");
-                Position check = stack.peek();
-                Position check2 = node.getPosition(); 
-                logger.info(check);
-                logger.info(check2);
-                if(check.equals(check2)){
+                Position bestPath = stack.peek();
+                Position exploredNodes = node.getPosition(); 
+
+                logger.info(bestPath);
+                logger.info(exploredNodes);
+
+                if(bestPath.equals(exploredNodes)){
                     logger.info("match");
-                    Direction way = node.getDirection(); 
-                    logger.info(way);
-                    if(way.equals(currentDir)){
+                    Direction next = node.getDirection(); 
+                    logger.info(next);
+
+                    if(next.equals(currentDir)){
                         path.addStep('F');
-                    }else if (way.equals(currentDir.turnRight())){
+
+                    }else if (next.equals(currentDir.turnRight())){
                         path.addStep('R');
                         path.addStep('F');
-                        currentDir = way;
-                    }else if (way.equals(currentDir.turnLeft())){
+                        currentDir = next;
+
+                    }else if (next.equals(currentDir.turnLeft())){
                         path.addStep('L');
                         path.addStep('F');
-                        currentDir = way; 
-                    }else if (way.equals(currentDir.turnRight().turnRight())){
+                        currentDir = next; 
+
+                    }else if (next.equals(currentDir.turnRight().turnRight())){
                         //technically should never happen since the BFS will not lead us to a dead end 
                         path.addStep('R');
                         path.addStep('R');
-                        currentDir = way; 
+                        currentDir = next; 
                     }
+
                     stack.pop();
                     break;
                 }

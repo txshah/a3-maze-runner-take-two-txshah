@@ -27,7 +27,7 @@ public class Main {
                     System.out.println("incorrect path");
                 }
             } else {
-                String method = cmd.getOptionValue("method", "bfs");
+                String method = cmd.getOptionValue("method", "righthand");
                 Path path = solveMaze(method, maze);
                 System.out.println(path.getFactorizedForm());
             }
