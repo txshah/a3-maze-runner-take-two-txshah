@@ -47,38 +47,39 @@ public class BFS implements MazeSolver {
             if (currentPos.equals(goalPos)) {
                 return true; 
             }
-            add(maze); //adds nodes to queue
+            //create list of three nodes right left and front of current
+            //if never searched and no wall before add to queue, if searched do not add to queue
+            ArrayList<Position> nodes = around(maze); //list of nodes around current 
 
-            for (Position node:queue){
+            for (Position node:nodes){
                 if(!explored.contains(node)){
                     explored.add(node);//tracks all explored nodes 
-
+                    queue.offer(node);
                     parentTracker.put(node,currentPos); //tracks new node and parent
 
                 }
             }
 
-
-
         }
         return true; 
     }
 
-    public static void add(Maze maze){
+    public static ArrayList<Position> around(Maze maze){
         //check nodes left and right and if they are not walls, add to queue 
-        
-        if(!maze.isWall(currentPos.move(dir))){
-            queue.offer(currentPos.move(dir)); 
-        }
+        ArrayList<Position> nodes = new ArrayList<>();
 
+        if(!maze.isWall(currentPos.move(dir))){
+            nodes.add(currentPos.move(dir)); 
+        }
         if (!maze.isWall(currentPos.move(dir.turnLeft()))){
-            queue.offer(currentPos.move(dir)); 
+            nodes.add(currentPos.move(dir)); 
         }
 
         if (!maze.isWall(currentPos.move(dir.turnRight()))){
-            queue.offer(currentPos.move(dir)); 
+            nodes.add(currentPos.move(dir)); 
         }
 
+        return nodes; 
     }
 
     public Path path() {
