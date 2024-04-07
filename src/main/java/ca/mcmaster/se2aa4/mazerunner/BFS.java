@@ -16,7 +16,7 @@ public class BFS implements MazeSolver {
     public static Position currentPos;
     public static Position goalPos; 
     public static Position startPos; 
-    public static Direction dir;
+    public static Direction dir = Direction.RIGHT; //starting direction, always right 
 
     public static Queue<Node> queue = new LinkedList<Node>();
     public static ArrayList<Node> explored = new ArrayList<Node>(); 
@@ -39,7 +39,7 @@ public class BFS implements MazeSolver {
         logger.info("in search"); 
         currentPos = maze.getStart();      
         goalPos = maze.getEnd();
-        Direction dir = Direction.RIGHT; //starting direction, always right 
+        
         logger.info(currentPos); 
         logger.info(goalPos); 
         logger.info(dir); 
@@ -56,6 +56,7 @@ public class BFS implements MazeSolver {
             currentPos = currentNode.getPosition();
 
             if (currentPos.equals(goalPos)) {//exit start node and goal node same 
+                logger.info("found goal 1");
                 return true; 
             }
 
@@ -63,16 +64,20 @@ public class BFS implements MazeSolver {
 
             for (Node node:nodes){//loop through all nodes around 
                 if(!explored.contains(node)){//if not already explored 
+                    logger.info("adding nodes");
                     queue.offer(node);//add to queue 
                     explored.add(node);//tracks in explored 
                     parentTracker.put(node.getPosition(),currentPos); //tracks new node and parent
-
-                    if (node.getPosition() == goalPos){//checks if goal position reached with new addition 
+                    logger.info(node.getPosition());
+                    logger.info(currentPos);
+                    if (node.getPosition().equals(goalPos)){//checks if goal position reached with new addition 
+                        logger.info("found goal");
                         return true;
                     }
                 }
             }
         }
+        logger.info("queue empty");
         return true; 
     }
 
@@ -82,6 +87,7 @@ public class BFS implements MazeSolver {
         ArrayList<Node> nodes = new ArrayList<>();
 
         if(!maze.isWall(currentPos.move(dir))){
+            logger.info("forward"); 
             nodes.add(new Node(currentPos.move(dir), dir)); 
             
             logger.info("node check 1");
@@ -89,14 +95,15 @@ public class BFS implements MazeSolver {
             logger.info(dir); 
         }
         if (!maze.isWall(currentPos.move(dir.turnLeft()))){
+            logger.info("left"); 
             nodes.add(new Node(currentPos.move(dir.turnLeft()), dir.turnLeft())); 
-
             logger.info("node check 2");
             logger.info(currentPos.move(dir.turnLeft())); 
             logger.info(dir.turnLeft()); 
         }
 
         if (!maze.isWall(currentPos.move(dir.turnRight()))){
+            logger.info("right"); 
             nodes.add(new Node(currentPos.move(dir.turnRight()), dir.turnRight())); 
 
             logger.info("node check 3");
@@ -120,32 +127,47 @@ public class BFS implements MazeSolver {
         while (current != startPos){//or until null? 
             logger.info("creating stack");
             stack.push(current); //push goal node, or any current node into stack 
+            logger.info(current);
             current = parentTracker.get(current); //update current to be parent of current node, so at start, parent of goal node
+            if(current == startPos){
+                logger.info("break");
+                break;
+            }
+            logger.info(current);
             //eventually will get to start node
         }
         //stack.push(current);//current should be startPos right now 
         logger.info("stack made");
         //loop through explored and check stack items with explored nodes 
-        while (!stack.isEmpty()){
+        while (!(stack.isEmpty())){
+            logger.info("in while");
             for (Node node:explored){
-                if(stack.pop().equals(node.getPosition())){
+                logger.info("checking nodes LOLZ");
+                Position check = stack.peek();
+                Position check2 = node.getPosition(); 
+                logger.info(check);
+                logger.info(check2);
+                if(check.equals(check2)){
                     logger.info("match");
-                    if(node.getDirection(). equals(currentDir)){
+                    Direction way = node.getDirection(); 
+                    logger.info(way);
+                    if(way.equals(currentDir)){
                         path.addStep('F');
-                    }else if (node.getDirection.equals(currentDir.turnRight())){
+                    }else if (way.equals(currentDir.turnRight())){
                         path.addStep('R');
                         path.addStep('F');
-                        currentDir = node.getDirection(); 
-                    }else if (node.getDirection.equals(currentDir.turnLeft())){
+                        currentDir = way;
+                    }else if (way.equals(currentDir.turnLeft())){
                         path.addStep('L');
                         path.addStep('F');
-                        currentDir = node.getDirection(); 
-                    }else if (node.getDirection.equals(currentDir.turnRight().turnRight())){
+                        currentDir = way; 
+                    }else if (way.equals(currentDir.turnRight().turnRight())){
                         //technically should never happen since the BFS will not lead us to a dead end 
                         path.addStep('R');
                         path.addStep('R');
-                        currentDir = node.getDirection(); 
+                        currentDir = way; 
                     }
+                    stack.pop();
                     break;
                 }
             }
