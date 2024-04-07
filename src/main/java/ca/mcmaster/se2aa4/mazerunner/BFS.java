@@ -83,7 +83,7 @@ public class BFS implements MazeSolver {
         //set up path and other variables 
         Path path = new Path();
         startPos = maze.getStart();   
-        Direction currentDir = Direction.RIGHT; //set start direction 
+        Direction currentDir = Direction.RIGHT; //set current direction 
 
         //stack ensures that even though we are backtracking from goalpoint we still read the values from the start
         Stack<Position> stack= new Stack<>(); //set up stack to hold nodes to traverse (start from end and go to start)
