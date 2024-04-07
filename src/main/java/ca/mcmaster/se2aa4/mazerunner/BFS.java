@@ -18,6 +18,7 @@ public class BFS implements MazeSolver {
 
     public static Queue<Position> queue = new LinkedList<Position>();
     public static ArrayList<Position> explored = new ArrayList<>(); 
+    public static Queue<Direction> direction = new LinkedList<Direction>();
 
     public static Map<Position, Position> parentTracker = new HashMap<>(); 
 
@@ -32,17 +33,20 @@ public class BFS implements MazeSolver {
 
     public static boolean search(Maze maze) {
         //current positions and goal position 
-        Position currentPos = maze.getStart();      
-        Position goalPos = maze.getEnd();
+        currentPos = maze.getStart();      
+        goalPos = maze.getEnd();
         
         //start direction - always facing right 
-        Direction dir = Direction.RIGHT;
-
+        
+        //start point storage 
         explored.add(currentPos);
         queue.offer(currentPos); 
+        parentTracker.put(currentPos, null);
+        direction.offer(Direction.RIGHT);
         
         while (!(queue.isEmpty())) {
             currentPos = queue.poll();
+            dir = direction.poll();
 
             if (currentPos.equals(goalPos)) {
                 return true; 
@@ -53,13 +57,12 @@ public class BFS implements MazeSolver {
 
             for (Position node:nodes){
                 if(!explored.contains(node)){
-                    explored.add(node);//tracks all explored nodes 
                     queue.offer(node);
+                    explored.add(node);//tracks all explored nodes 
                     parentTracker.put(node,currentPos); //tracks new node and parent
 
                 }
             }
-
         }
         return true; 
     }
