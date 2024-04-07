@@ -26,8 +26,9 @@ public class Main {
                 } else {
                     System.out.println("incorrect path");
                 }
-            } else {
-                String method = cmd.getOptionValue("method", "righthand");
+            } else if (cmd.getOptionValue("method") != null){
+                //if user does -method they can choose either bfs, righthand or tremaux
+                String method = cmd.getOptionValue("method");
                 Path path = solveMaze(method, maze);
                 System.out.println(path.getFactorizedForm());
             }

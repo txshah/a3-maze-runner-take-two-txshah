@@ -1,23 +1,22 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
 public class Node {
-
+//node class so I can store both position and current direction 
     private Position position;
     private Direction direction;
     //private Path path; 
-    public Object getDirection;
 
-    public Node(Position position, Direction direction) {
+    public Node(Position position, Direction direction) {//create node 
         this.position = position;
         this.direction = direction;
         //this.path = path;
     }
 
-    public Position getPosition() {
+    public Position getPosition() {//return position of node 
         return position;
     }
 
-    public Direction getDirection() {
+    public Direction getDirection() {//return direction of node 
         return direction;
     }
     
