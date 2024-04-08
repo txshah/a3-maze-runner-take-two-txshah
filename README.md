@@ -14,6 +14,9 @@ Additional resources for graph implementation:
 - General Understanding of BFS and it's practical implementation 
     - TheHappieCat (https://www.youtube.com/watch?v=WvR9voi0y2I&t=339s&ab_channel=TheHappieCat)
     - GeeksForGeeks (https://www.geeksforgeeks.org/breadth-first-search-or-bfs-for-a-graph/)
+- Node Classes and how to use (how to store multiple properties in a node): 
+    - Codecademy (https://www.codecademy.com/learn/getting-started-with-data-structures-java/modules/nodes-java/cheatsheet)
+    - JavatPoint (https://www.javatpoint.com/java-program-to-create-a-singly-linked-list-of-n-nodes-and-count-the-number-of-nodes)   
 
 ## Business Logic Specification
 
