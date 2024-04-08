@@ -1,6 +1,8 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
 import org.apache.commons.cli.*;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.Options;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -10,14 +12,18 @@ public class Main {
 
     public static void main(String[] args) {
         logger.info("** Starting Maze Runner");
-        CommandLineParser parser = new DefaultParser();
 
+        CommandLineParser parser = new DefaultParser();
         CommandLine cmd = null;
+        
         try {
             cmd = parser.parse(getParserOptions(), args);
             String filePath = cmd.getOptionValue('i');
             logger.info(filePath);
+            
+            long start = System.nanoTime();
             Maze maze = new Maze(filePath);
+            long end = System.nanoTime();
 
             if (cmd.getOptionValue("p") != null) {
                 logger.info("Validating path");
@@ -32,6 +38,16 @@ public class Main {
                 String method = cmd.getOptionValue("method");
                 Path path = solveMaze(method, maze);
                 System.out.println(path.getFactorizedForm());
+
+            }else if (cmd.getOptionValue("baseline") != null){
+                String baseline = cmd.getOptionValue("baseline");
+
+                long mazeTime = end - start; 
+
+                System.out.println("Time taken to go through maze: " + String.format("%.2f", mazeTime/1_000_000.0) + "ms"); 
+
+                
+
             }
         } catch (Exception e) {
             System.err.println("MazeSolver failed.  Reason: " + e.getMessage());
@@ -88,6 +104,8 @@ public class Main {
 
         options.addOption(new Option("p", true, "Path to be verified in maze"));
         options.addOption(new Option("method", true, "Specify which path computation algorithm will be used"));
+        options.addOption(new Option("baseline", true, "Specify which method to use as baseline"));
+
 
         return options;
     }
