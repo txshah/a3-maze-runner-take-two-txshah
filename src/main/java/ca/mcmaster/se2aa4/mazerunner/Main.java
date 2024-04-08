@@ -40,13 +40,19 @@ public class Main {
                 System.out.println(path.getFactorizedForm());
 
             }else if (cmd.getOptionValue("baseline") != null){
-                String baseline = cmd.getOptionValue("baseline");
+
+                String baseline = cmd.getOptionValue("baseline");g
 
                 long mazeTime = end - start; 
 
                 System.out.println("Time taken to go through maze: " + String.format("%.2f", mazeTime/1_000_000.0) + "ms"); 
 
-                
+                Path baseline = solveMaze(baseline, maze);
+                String path1 = baseline.getCanonicalForm(); 
+
+                Path bfs = solveMaze("bfs", maze);
+                String path2 = bfs.getCanonicalForm(); 
+
 
             }
         } catch (Exception e) {
