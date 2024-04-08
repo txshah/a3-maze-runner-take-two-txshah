@@ -16,6 +16,7 @@ public class Main {
         try {
             cmd = parser.parse(getParserOptions(), args);
             String filePath = cmd.getOptionValue('i');
+            logger.info(filePath);
             Maze maze = new Maze(filePath);
 
             if (cmd.getOptionValue("p") != null) {

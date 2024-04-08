@@ -54,13 +54,13 @@ public class BFS implements MazeSolver {
                     explored.add(node);//tracks in explored 
                     parentTracker.put(node.getPosition(),currentPos); //tracks new node and parent
                     
-                    if (node.getPosition().equals(goalPos)){//checks if goal position reached with new addition 
-                        return true;//exits loop if at goal position 
+                    if (node.getPosition().equals(goalPos)){ //checks if goal position reached with new addition 
+                        return true; //exits loop if at goal position 
                     }
                 }
             }
         }
-        return true; 
+        return false; 
     }
 
     private static ArrayList<Node> around(Maze maze){
