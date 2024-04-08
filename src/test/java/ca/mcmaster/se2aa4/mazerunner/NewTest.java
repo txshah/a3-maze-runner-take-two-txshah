@@ -66,7 +66,7 @@ class NewTest {
 
         Node node = new Node(position, direction);
 
-        //checks if variables I made and variables stored and pull from node are equal 
+        //checks if variables I made and variables stored and pulled from node are equal 
 
         //test direction 
         assertEquals(direction, node.getDirection());
