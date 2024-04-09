@@ -39,21 +39,20 @@ public class Main {
                 Path path = solveMaze(method, maze);
                 System.out.println(path.getFactorizedForm());
 
-            }else if (cmd.getOptionValue("baseline") != null){
+            }else if ((cmd.getOptionValue("baseline") != null)){
 
-                String baseline = cmd.getOptionValue("baseline");g
+                String baselineCmd = cmd.getOptionValue("baseline");
+                //String methodCmd = cmd.getOptionValue("method");
 
                 long mazeTime = end - start; 
 
                 System.out.println("Time taken to go through maze: " + String.format("%.2f", mazeTime/1_000_000.0) + "ms"); 
 
-                Path baseline = solveMaze(baseline, maze);
-                String path1 = baseline.getCanonicalForm(); 
+                double path1 = calculation(baselineCmd, maze); //choosen baseline
+                double path2 = calculation("bfs", maze); //compare method 
 
-                Path bfs = solveMaze("bfs", maze);
-                String path2 = bfs.getCanonicalForm(); 
-
-
+                System.out.println("Speedup = baseline/method = " + path1+"/"+path2 + "= " + String.format("%.2f", path1/path2));
+                //System.out.println(methodCmd +"is " + String.format("%.2f", path1/path2) + " faster");
             }
         } catch (Exception e) {
             System.err.println("MazeSolver failed.  Reason: " + e.getMessage());
@@ -114,5 +113,23 @@ public class Main {
 
 
         return options;
+    }
+
+    private static int calculation(String method, Maze maze) throws Exception{
+        int commands = 0; 
+
+        long start = System.nanoTime();
+        Path path = solveMaze(method, maze);
+        String output = path.getCanonicalForm();
+        long end = System.nanoTime();
+
+        long mazeTime = end - start; 
+        System.out.println("Time taken to get path through maze with " + method +" is :" + String.format("%.2f", mazeTime/1_000_000.0) + "ms"); 
+
+        for(int i =0; i<output.length(); i++){
+            commands+=1;
+        }
+
+        return commands; 
     }
 }
