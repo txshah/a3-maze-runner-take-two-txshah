@@ -33,26 +33,26 @@ public class Main {
                 } else {
                     System.out.println("incorrect path");
                 }
-            } else if (cmd.getOptionValue("method") != null){
+            } else if ((cmd.getOptionValue("method") != null) && (cmd.getOptionValue("baseline") == null)){
                 //if user does -method they can choose either bfs, righthand or tremaux
                 String method = cmd.getOptionValue("method");
                 Path path = solveMaze(method, maze);
                 System.out.println(path.getFactorizedForm());
 
-            }else if ((cmd.getOptionValue("baseline") != null)){
+            }else if ((cmd.getOptionValue("baseline") != null) && (cmd.getOptionValue("method") != null)){
 
                 String baselineCmd = cmd.getOptionValue("baseline");
-                //String methodCmd = cmd.getOptionValue("method");
+                String methodCmd = cmd.getOptionValue("method");
 
                 long mazeTime = end - start; 
 
                 System.out.println("Time taken to go through maze: " + String.format("%.2f", mazeTime/1_000_000.0) + "ms"); 
 
                 double path1 = calculation(baselineCmd, maze); //choosen baseline
-                double path2 = calculation("bfs", maze); //compare method 
+                double path2 = calculation(methodCmd, maze); //compare method 
 
                 System.out.println("Speedup = baseline/method = " + path1+"/"+path2 + "= " + String.format("%.2f", path1/path2));
-                //System.out.println(methodCmd +"is " + String.format("%.2f", path1/path2) + " faster");
+                System.out.println(methodCmd +" is " + String.format("%.2f", path1/path2) + " faster");
             }
         } catch (Exception e) {
             System.err.println("MazeSolver failed.  Reason: " + e.getMessage());
@@ -124,7 +124,7 @@ public class Main {
         long end = System.nanoTime();
 
         long mazeTime = end - start; 
-        System.out.println("Time taken to get path through maze with " + method +" is :" + String.format("%.2f", mazeTime/1_000_000.0) + "ms"); 
+        System.out.println("Time taken to get path through maze with " + method +" is:" + String.format("%.2f", mazeTime/1_000_000.0) + "ms"); 
 
         for(int i =0; i<output.length(); i++){
             commands+=1;
