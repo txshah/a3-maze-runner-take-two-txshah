@@ -21,9 +21,9 @@ public class Main {
             String filePath = cmd.getOptionValue('i');
             logger.info(filePath);
             
-            long start = System.nanoTime();
+            long start = System.nanoTime();//getting time to create maze
             Maze maze = new Maze(filePath);
-            long end = System.nanoTime();
+            long end = System.nanoTime();//getting time to create maze
 
             if (cmd.getOptionValue("p") != null) {
                 logger.info("Validating path");
@@ -34,25 +34,29 @@ public class Main {
                     System.out.println("incorrect path");
                 }
             } else if ((cmd.getOptionValue("method") != null) && (cmd.getOptionValue("baseline") == null)){
-                //if user does -method they can choose either bfs, righthand or tremaux
+                //if user does -method (and does not do -baseline) they can choose either bfs, righthand or tremaux
                 String method = cmd.getOptionValue("method");
                 Path path = solveMaze(method, maze);
                 System.out.println(path.getFactorizedForm());
 
             }else if ((cmd.getOptionValue("baseline") != null) && (cmd.getOptionValue("method") != null)){
 
-                String baselineCmd = cmd.getOptionValue("baseline");
-                String methodCmd = cmd.getOptionValue("method");
+                String baselineCmd = cmd.getOptionValue("baseline");//get baseline value
+                String methodCmd = cmd.getOptionValue("method");//get method value 
 
-                long mazeTime = end - start; 
+                long mazeTime = end - start; //call time taken to get maze implementation 
 
-                System.out.println("Time taken to go through maze: " + String.format("%.2f", mazeTime/1_000_000.0) + "ms"); 
+                //output maze creation time 
+                System.out.println("Time taken to go load the maze: " + String.format("%.2f", mazeTime/1_000_000.0) + "ms"); 
 
                 double path1 = calculation(baselineCmd, maze); //choosen baseline
                 double path2 = calculation(methodCmd, maze); //compare method 
 
+                //print speedup 
                 System.out.println("Speedup = baseline/method = " + path1+"/"+path2 + "= " + String.format("%.2f", path1/path2));
-                System.out.println(methodCmd +" is " + String.format("%.2f", path1/path2) + " faster");
+                
+                //difference b/w baseline and method chosen (how much faster is the method)
+                System.out.println(methodCmd +" is " + String.format("%.2f", path1/path2) + " times faster");
             }
         } catch (Exception e) {
             System.err.println("MazeSolver failed.  Reason: " + e.getMessage());
@@ -84,7 +88,7 @@ public class Main {
             }//added BFS implementation 
             case "bfs" -> {
                 logger.debug("BFS algorithm chosen.");
-                solver = new BFS();
+                solver = new BFS();//create new solver of BFS chosen 
             }
             default -> {
                 throw new Exception("Maze solving method '" + method + "' not supported.");
@@ -116,20 +120,25 @@ public class Main {
     }
 
     private static int calculation(String method, Maze maze) throws Exception{
+        //get number of moves based on chose method (baseline or method)
         int commands = 0; 
 
-        long start = System.nanoTime();
+        long start = System.nanoTime();//start time 
         Path path = solveMaze(method, maze);
         String output = path.getCanonicalForm();
         long end = System.nanoTime();
 
         long mazeTime = end - start; 
-        System.out.println("Time taken to get path through maze with " + method +" is:" + String.format("%.2f", mazeTime/1_000_000.0) + "ms"); 
+        //output time taken per method 
+        System.out.println("Time taken to explore the maze with " + method +" is:" + String.format("%.2f", mazeTime/1_000_000.0) + "ms"); 
 
-        for(int i =0; i<output.length(); i++){
-            commands+=1;
+        for(int i = 0; i<output.length(); i++){
+            if (output.charAt(i) != ' '){
+                commands+=1;
+            }
         }
-
+        
+        //return number of moves in path to get to end 
         return commands; 
     }
 }
