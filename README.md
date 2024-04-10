@@ -123,12 +123,26 @@ Additional Command line arguments:
 
 #### Examples
 
-When no logs are activated, the programs only print the computed path on the standard output.
+When no logs are activated, the programs only print the computed path on the standard output. Currently in files logs are activated. 
+
+Finding the shortest path with BFS 
 
 ```
-mosser@azrael A1-Template % java -jar target/mazerunner.jar -i ./examples/straight.maz.txt
-4F
-mosser@azrael A1-Template %
+tveshashah@MacBook-Pro a3-maze-runner-take-two-txshah % java -jar target/mazerunner.jar -i ./examples/large.maz.txt -method bfs              
+15F R 2F L 8F R 2F L 4F R 2F L 4F R 4F L 6F R 2F L 2F R 2F L 2F R 2F L 2F R 2F L 2F R 2F L 2F R 6F L 2F L 2F R F
+tveshashah@MacBook-Pro a3-maze-runner-take-two-txshah % 
+```
+
+Using baseline 
+
+```
+tveshashah@MacBook-Pro a3-maze-runner-take-two-txshah % java -jar target/mazerunner.jar -i ./examples/large.maz.txt -method bfs -baseline righthand
+Time taken to go load the maze: 0.78ms
+Time taken to explore the maze with righthand is:48.87ms
+Time taken to explore the maze with bfs is:6.65ms
+Speedup = baseline/method = 4494.0/144.0= 31.21
+bfs is 31.21 times faster
+tveshashah@MacBook-Pro a3-maze-runner-take-two-txshah % 
 ```
 
 If a given path is correct, the program prints the message `correct path` on the standard output.
