@@ -1,8 +1,6 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
 import org.apache.commons.cli.*;
-import org.apache.commons.cli.Option;
-import org.apache.commons.cli.Options;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -82,14 +80,17 @@ public class Main {
             case "righthand" -> {
                 logger.debug("RightHand algorithm chosen.");
                 solver = new RightHandSolver();
+                break;
             }
             case "tremaux" -> {
                 logger.debug("Tremaux algorithm chosen.");
                 solver = new TremauxSolver();
+                break;
             }//added BFS implementation 
             case "bfs" -> {
                 logger.debug("BFS algorithm chosen.");
                 solver = new BFS();//create new solver of BFS chosen 
+                break;
             }
             default -> {
                 throw new Exception("Maze solving method '" + method + "' not supported.");
@@ -127,6 +128,7 @@ public class Main {
         long start = System.nanoTime();//start time 
         Path path = solveMaze(method, maze);
         String output = path.getCanonicalForm();
+        logger.info(output);
         long end = System.nanoTime();
 
         long mazeTime = end - start; 

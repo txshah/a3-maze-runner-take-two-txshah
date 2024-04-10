@@ -161,4 +161,12 @@ public class Maze {
 
         return pos.equals(endPos);
     }
+
+    public Boolean validPosition(Position pos){
+        if (pos.x() >= getSizeX() || pos.y() >= getSizeY() || pos.x() < 0 || pos.y() < 0) {
+            return false;
+        }else{
+            return true;
+        }
+    }
 }

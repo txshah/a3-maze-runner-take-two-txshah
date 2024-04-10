@@ -70,11 +70,11 @@ public class BFS implements MazeSolver {
         if(!maze.isWall(currentPos.move(dir))){//check forward 
             nodes.add(new Node(currentPos.move(dir), dir)); 
         }
-        if (!maze.isWall(currentPos.move(dir.turnLeft()))){ //check left 
-            nodes.add(new Node(currentPos.move(dir.turnLeft()), dir.turnLeft()));      
-        }
         if (!maze.isWall(currentPos.move(dir.turnRight()))){ //check right 
             nodes.add(new Node(currentPos.move(dir.turnRight()), dir.turnRight())); 
+        }
+        if (!maze.isWall(currentPos.move(dir.turnLeft()))){ //check left 
+            nodes.add(new Node(currentPos.move(dir.turnLeft()), dir.turnLeft()));      
         }
         return nodes; 
     }
@@ -89,12 +89,15 @@ public class BFS implements MazeSolver {
         Stack<Position> stack= new Stack<>(); //set up stack to hold nodes to traverse (start from end and go to start)
         Position current = goalPos; 
 
-        while (!(current.equals(startPos))){//make sure current node is not start (since working backwards)
+        while (!current.equals(startPos)){//make sure current node is not start (since working backwards)
             stack.push(current); //push current node into stack (starts with goal/final node)
             current = parentTracker.get(current); //update current to be parent of current node (at start, parent of goal node)
+            if(current == startPos){
+                break;
+            }
         }
 
-        while (!(stack.isEmpty())){//run until entire stack empty 
+        while (!stack.isEmpty()){//run until entire stack empty 
             for (Node node:explored){ //loop through explored and check stack items with explored nodes 
                 Position bestPath = stack.peek();//store first item in stack (after start node - since already there don't need to travel there)
                 Position exploredNodes = node.getPosition(); //store position of node
@@ -117,14 +120,7 @@ public class BFS implements MazeSolver {
                         path.addStep('F');
                         currentDir = next; //update current 
 
-                    }else if (next.equals(currentDir.turnRight().turnRight())){
-                        //uturn case 
-                        //technically should never happen since the BFS will not lead us to a dead end 
-                        path.addStep('R');
-                        path.addStep('R');
-                        currentDir = next; 
                     }
-
                     stack.pop();//since node and stack value match, pop the value out 
                     break;//break loop 
                 }
@@ -132,5 +128,6 @@ public class BFS implements MazeSolver {
         }
         return path; //return final output 
     }
+    
 }
 
