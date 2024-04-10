@@ -48,54 +48,78 @@ To build the program, simply package it with Maven:
 mosser@azrael A1-Template % mvn -q clean package 
 ```
 
-### Provided version (starter code)
+### Initial version (starter code)
 
-The starter code assumes the maze file name is the first argument.
+The starter code taken from: https://github.com/2AA4-W24/a1-solution 
+credits to Alexandre Lachance and Sebastien Mosser
+
+When called on a non-existing file or a correct file without -i . it prints an error message
+```
+tveshashah@MacBook-Pro a3-maze-runner-take-two-txshah % java -jar target/mazerunner.jar ./examples/small.maz.txt 
+[INFO ] Main ** Starting Maze Runner
+MazeSolver failed.  Reason: Missing required option: i
+[ERROR] Main MazeSolver failed.  Reason: Missing required option: i
+[ERROR] Main PATH NOT COMPUTED
+[INFO ] Main End of MazeRunner
+tveshashah@MacBook-Pro a3-maze-runner-take-two-txshah %
 
 ```
-mosser@azrael A1-Template % java -jar target/mazerunner.jar ./examples/small.maz.txt
-** Starting Maze Runner
-**** Reading the maze from file ./examples/small.maz.txt
-WALL WALL WALL WALL WALL WALL WALL WALL WALL WALL WALL 
-WALL PASS PASS PASS PASS PASS PASS PASS PASS PASS WALL 
-WALL WALL WALL PASS WALL WALL WALL PASS WALL WALL WALL 
-WALL PASS PASS PASS PASS PASS WALL PASS PASS PASS WALL 
-WALL PASS WALL PASS WALL WALL WALL WALL WALL PASS WALL 
-WALL PASS WALL PASS PASS PASS PASS PASS WALL PASS PASS 
-WALL WALL WALL PASS WALL PASS WALL WALL WALL WALL WALL 
-WALL PASS PASS PASS WALL PASS PASS PASS PASS PASS WALL 
-PASS PASS WALL PASS WALL PASS WALL WALL WALL PASS WALL 
-WALL PASS WALL PASS WALL PASS WALL PASS PASS PASS WALL 
-WALL WALL WALL WALL WALL WALL WALL WALL WALL WALL WALL 
-**** Computing path
-PATH NOT COMPUTED
-** End of MazeRunner
 ```
-
-When called on a non-existing file. it prints an error message
-
+[INFO ] Main ** Starting Maze Runner
+[INFO ] Main ./examples/small.maz.txtd
+MazeSolver failed.  Reason: ./examples/small.maz.txtd (No such file or directory)
+[ERROR] Main MazeSolver failed.  Reason: ./examples/small.maz.txtd (No such file or directory)
+[ERROR] Main PATH NOT COMPUTED
+[INFO ] Main End of MazeRunner
+tveshashah@MacBook-Pro a3-maze-runner-take-two-txshah % 
 ```
-mosser@azrael A1-Template % java -jar target/mazerunner.jar ./examples/small.maz.txtd
-** Starting Maze Runner
-**** Reading the maze from file ./examples/small.maz.txtd
-/!\ An error has occured /!\
-**** Computing path
-PATH NOT COMPUTED
-** End of MazeRunner
-```
-
-### Delivered version
-
-#### Command line arguments
-
-The delivered program at the end of this assignment should use the following flags:
-
+#### Initial Command line arguments
 - `-i MAZE_FILE`: specifies the filename to be used;
 - `-p PATH_SEQUENCE`: activates the path verification mode to validate that PATH_SEQUENCE is correct for the maze
 
 If you are also delivering the bonus, your program will react to a third flag:
 
 - `-method {tremaux, righthand}`: specifies which path computation method to use. (default is right hand)
+
+#### Examples
+
+When no logs are activated, the programs only print the computed path on the standard output.
+
+```
+mosser@azrael A1-Template % java -jar target/mazerunner.jar -i ./examples/straight.maz.txt
+4F
+mosser@azrael A1-Template %
+```
+
+If a given path is correct, the program prints the message `correct path` on the standard output.
+
+```
+mosser@azrael A1-Template % java -jar target/mazerunner.jar -i ./examples/straight.maz.txt -p 4F
+correct path
+mosser@azrael A1-Template %
+```
+
+If a given path is incorrect, the program prints the message `incorrect path` on the standard output.
+
+```
+mosser@azrael A1-Template % java -jar target/mazerunner.jar -i ./examples/straight.maz.txt -p 3F
+inccorrect path
+mosser@azrael A1-Template %
+```
+
+### Delivered version
+#### Command line arguments
+
+Still contains initial command line arguments :
+
+- `-i MAZE_FILE`: specifies the filename to be used;
+- `-p PATH_SEQUENCE`: activates the path verification mode to validate that PATH_SEQUENCE is correct for the maze
+
+- `-method {tremaux, righthand}`: specifies which path computation method to use. (NO DEFAULT - MUST CHOOSE METHOD)
+
+Additional Command line arguments:
+- `-method {bfs}`: additional bfs graph search algorithm added 
+- `-baseline {tremaux, righthand, bfs}`: when doing both -method and -baseline (any order) compares how the -method is more improved than the baseline 
 
 #### Examples
 

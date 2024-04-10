@@ -36,6 +36,7 @@ public class Main {
             } else if ((cmd.getOptionValue("method") != null) && (cmd.getOptionValue("baseline") == null)){
                 //if user does -method (and does not do -baseline) they can choose either bfs, righthand or tremaux
                 String method = cmd.getOptionValue("method");
+
                 Path path = solveMaze(method, maze);
                 System.out.println(path.getFactorizedForm());
 
