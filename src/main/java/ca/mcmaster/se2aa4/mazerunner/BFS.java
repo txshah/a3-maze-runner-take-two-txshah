@@ -125,7 +125,8 @@ public class BFS implements MazeSolver {
                 }
             }
         }
-        queue.clear();//clearing all data structures 
+        
+        queue.clear();//clearing all data structures - for cases where same algorithm called twice in command line 
         explored.clear();
         parentTracker.clear();
         return path; //return final output 

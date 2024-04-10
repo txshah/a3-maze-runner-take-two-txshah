@@ -1,0 +1,75 @@
+class Main {
+    - args: String[]
+    + main(String[] args)
+}
+
+interface Solver {
+    + solve(maze: Maze): Path
+}
+
+class RightHandSolver {
+    + solve(maze: Maze): Path
+}
+
+class TremauxSolver {
+    + solve(maze: Maze): Path
+}
+
+class BFSSolver {
+    + solve(maze: Maze): Path
+    - goalPos: Position
+    - currentPos: Position
+    - dir: Direction
+    
+}
+
+class Maze {
+    - mazeFile: File
+    - startPosition: Position
+    - endPosition: Position
+    - mazeMatrix: int[][]
+    + Maze()
+    + loadMazeFromFile(file: File)
+    + validatePath(path: Path): boolean
+    + getStartPosition(): Position
+    + getEndPosition(): Position
+    + getMazeMatrix(): int[][]
+}
+
+class Position {
+    - x: int
+    - y: int
+    + getX(): int
+    + getY(): int
+}
+
+class Node {
+    - position: Position
+    - direction: Direction
+    + getPosition(): Position
+    + getDirection(): Direction
+}
+
+class Direction {
+    - direction: int
+    + getDirection(): int
+}
+
+class Path {
+    - steps: Node[]
+    + addStep(step: Node)
+    + printPath()
+}
+
+Main --> Maze
+Main --> Solver
+Solver <|-- RightHandSolver
+Solver <|-- TremauxSolver
+Solver <|-- BFSSolver
+Maze --> Position
+Maze --> Direction
+Maze --> Path
+BFSSolver --> Node
+BFSSolver --> Path
+Node --> Position
+Node --> Direction

@@ -1,0 +1,44 @@
+actor User
+
+participant Main
+participant Maze
+participant Solver
+participant RightHandSolver
+participant TremauxSolver
+participant BFSSolver
+participant Node
+participant Path
+
+User -> Main: Enter command line arguments
+Main -> Maze: Parse maze file (-i)
+Maze --> Main: Maze data Structure loaded
+Main -> Main: Parse options {-p, -method, -baseline}
+
+Main -> Maze: -p option: ValidatePath()
+Maze-> Main: true/false
+Main -> Maze: store result
+Main --> User: Print result
+
+Main -> Solver: -method option: Start choosen solver
+Solver -> RightHandSolver: Solve with right-hand rule
+RightHandSolver --> Solver: Path obtained
+Solver -> TremauxSolver: Solve with Tremaux algorithm
+TremauxSolver --> Solver: Path obtained
+Solver -> BFSSolver: Solve with BFS algorithm
+loop until currentPos = goalPos
+BFSSolver -> Node: Add nearby valid nodes 
+Node -> Position: Get position attribute 
+Node -> Direction: Get direction attribute 
+end 
+BFSSolver -> Path: Goal node found, adding steps to path
+BFSSolver --> Solver: Path obtained
+
+Solver -> Main: Path obtained from chosen method
+Main --> User: Print path
+
+Main -> Main: -baseline option chosen
+Main -> Solver: compare chosen algorithms (baseline vs method)
+Solver -> Main: Store speed and number of instructions
+Main --> Main: Commparison calculation()
+Main --> User: Print Comparison results
+
