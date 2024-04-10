@@ -48,8 +48,7 @@ public class BFS implements MazeSolver {
             ArrayList<Node> nodes = around(maze); //list of nodes around current 
 
             for (Node node:nodes){//loop through all nodes around 
-                if(!explored.contains(node)){//if not already explored 
-
+                if(newPosition(node)){//if not already explored 
                     queue.offer(node);//add to queue 
                     explored.add(node);//tracks in explored 
                     parentTracker.put(node.getPosition(),currentPos); //tracks new node and parent
@@ -126,10 +125,21 @@ public class BFS implements MazeSolver {
                 }
             }
         }
-        queue.clear();
+        queue.clear();//clearing all data structures 
         explored.clear();
         parentTracker.clear();
         return path; //return final output 
+    }
+
+    private static boolean newPosition(Node node){
+        Position check = node.getPosition();
+        for (Node nodes: explored){
+            if(nodes.getPosition().equals(check)){
+                return false; 
+            }
+        }
+        return true; 
+
     }
     
 }
