@@ -128,7 +128,6 @@ public class Main {
         long start = System.nanoTime();//start time 
         Path path = solveMaze(method, maze);
         String output = path.getCanonicalForm();
-        logger.info(output);
         long end = System.nanoTime();
 
         long mazeTime = end - start; 
