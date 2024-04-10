@@ -126,6 +126,9 @@ public class BFS implements MazeSolver {
                 }
             }
         }
+        queue.clear();
+        explored.clear();
+        parentTracker.clear();
         return path; //return final output 
     }
     
