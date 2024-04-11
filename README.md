@@ -163,9 +163,9 @@ mosser@azrael A1-Template %
 ### References
 These are official citations of the resources from above. I used these throughout the graph implementation to better understand these algorithms.
 
-[1] Prof. J. Hellings, “2C03 Course Content ,” in SFWRENG 2C03:Data Structures and Algorithms
-[2] “Java program to create a singly linked list of N nodes and count the number of nodes - javatpoint,” www.javatpoint.com, https://www.javatpoint.com/java-program-to-create-a-singly-linked-list-of-n-nodes-and-count-the-number-of-nodes (accessed Apr. 10, 2024).
-[3] “Getting started with data structures: Nodes cheatsheet,” Codecademy, https://www.codecademy.com/learn/getting-started-with-data-structures-java/modules/nodes-java/cheatsheet (accessed Apr. 10, 2024).
-[4] GfG, “Breadth first search or BFS for a graph,” GeeksforGeeks, https://www.geeksforgeeks.org/breadth-first-search-or-bfs-for-a-graph/ (accessed Apr. 10, 2024).
-[5] “How to do pathfinding: The basics (graphs, BFS, and DFS in unity),” YouTube, https://www.youtube.com/watch?v=WvR9voi0y2I&t=339s&ab_channel=TheHappieCat (accessed Apr. 10, 2024). 
+[1] Prof. J. Hellings, “2C03 Course Content ,” in SFWRENG 2C03:Data Structures and Algorithms<br />
+[2] “Java program to create a singly linked list of N nodes and count the number of nodes - javatpoint,” www.javatpoint.com, https://www.javatpoint.com/java-program-to-create-a-singly-linked-list-of-n-nodes-and-count-the-number-of-nodes (accessed Apr. 10, 2024).<br />
+[3] “Getting started with data structures: Nodes cheatsheet,” Codecademy, https://www.codecademy.com/learn/getting-started-with-data-structures-java/modules/nodes-java/cheatsheet (accessed Apr. 10, 2024).<br />
+[4] GfG, “Breadth first search or BFS for a graph,” GeeksforGeeks, https://www.geeksforgeeks.org/breadth-first-search-or-bfs-for-a-graph/ (accessed Apr. 10, 2024).<br />
+[5] “How to do pathfinding: The basics (graphs, BFS, and DFS in unity),” YouTube, https://www.youtube.com/watch?v=WvR9voi0y2I&t=339s&ab_channel=TheHappieCat (accessed Apr. 10, 2024). <br />
 
